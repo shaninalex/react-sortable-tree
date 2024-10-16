@@ -1,9 +1,9 @@
-import { Main } from './components'
+import { Sortable } from './Sortable'
 
 function App() {
     return (
         <div className='p-5'>
-            <Main />
+            <Sortable />
         </div>
     )
 }

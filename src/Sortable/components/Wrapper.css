@@ -1,0 +1,14 @@
+.wrapper {
+    position: relative;
+    background: white;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+}
+
+.ghost {
+    background: #b7e895 !important;
+}
