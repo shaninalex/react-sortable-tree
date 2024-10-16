@@ -19,14 +19,8 @@ const GroupTree = ({
 
     const handleOnEnd = () => {
         const attemps = [...ref.current];
-        // 1. Trying to execute attems in original order
-        // -> same error
-
-        // 2. Trying to execute attems in new order (the deeper will be execute firts)
-        // -> worked!!!
         attemps.sort((a, b) => b.groupsIndex.length - a.groupsIndex.length);
 
-        // 3. Execute attems
         const tempList = [...groups];
         let attempIndex = 0;
         while (attempIndex < attemps.length) {
