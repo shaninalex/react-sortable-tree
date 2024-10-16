@@ -1,6 +1,6 @@
 
 export interface TreeNode {
-    id: string 
+    id: string
     content: string
-    children?: Node[]
+    children: TreeNode[]
 }
