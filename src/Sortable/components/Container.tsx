@@ -1,5 +1,5 @@
 import { ReactSortable } from "react-sortablejs";
-import { IFilterGroupSort } from "../types";
+import { IFilterGroupSort, IFilterSort } from "../types";
 import Wrapper from "./Wrapper";
 
 interface ContainerProps {
@@ -8,6 +8,7 @@ interface ContainerProps {
     isRoot?: boolean;
 
     setList: (groupsIndex: number[], groups: IFilterGroupSort[]) => void;
+    setListFilters: (filtersIndex: number[], filters: IFilterSort[]) => void;
     onEnd: () => void;
 }
 
@@ -19,7 +20,7 @@ const Container = (props: ContainerProps) => {
             animation={150}
             fallbackOnBody={true}
             swapThreshold={0.25}
-            ghostClass={"ghost"}
+            ghostClass={"opacity-80"}
             group={"shared"}
             forceFallback={true}
             onEnd={props.onEnd}
@@ -32,6 +33,7 @@ const Container = (props: ContainerProps) => {
                         group={childBlock}
                         groupsIndex={[...props.groupsIndex, index]}
                         setList={props.setList}
+                        setListFilters={props.setListFilters}
                         onEnd={props.onEnd}
                     />
                 );

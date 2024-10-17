@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { IFilterGroupSort } from "../types";
+import { IFilterGroupSort, IFilterSort } from "../types";
 import Wrapper from "./Wrapper";
 
 interface GroupTreeProps {
@@ -33,6 +33,11 @@ const GroupTree = (props: GroupTreeProps) => {
         onChange(tempList);
     };
 
+    const handleSetListFilters = (filtersIndex: number[], filters: IFilterSort[]) => {
+        console.log('filtersIndex:', filtersIndex)
+        console.log('filters:', filters)
+    }
+
     return (
         <div>
             <Wrapper
@@ -40,6 +45,7 @@ const GroupTree = (props: GroupTreeProps) => {
                 group={groups[0]}
                 groupsIndex={[0]}
                 setList={handleSetGroups}
+                setListFilters={handleSetListFilters}
                 onEnd={handleOnEnd}
                 isRoot
             />

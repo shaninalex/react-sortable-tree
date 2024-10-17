@@ -6,7 +6,7 @@ interface ContainerProps {
     filtersIndex: number[];
     isRoot?: boolean;
 
-    setList: (filtersIndex: number[], groups: IFilterSort[]) => void;
+    setListFilters: (filtersIndex: number[], groups: IFilterSort[]) => void;
     onEnd: () => void;
 }
 
@@ -14,7 +14,7 @@ const ContainerFilters = (props: ContainerProps) => {
     return (
         <ReactSortable
             list={props.filters ?? []}
-            setList={(s1, _s2, s3) => s3.dragging && props.setList(props.filtersIndex, s1)}
+            setList={(s1, _s2, s3) => s3.dragging && props.setListFilters(props.filtersIndex, s1)}
             animation={150}
             fallbackOnBody={true}
             swapThreshold={0.25}
