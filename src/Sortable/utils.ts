@@ -1,6 +1,6 @@
-import { IFilter, IFilterGroup } from "../typings";
-import { v4 as uuid } from "uuid"
-import { IFilterGroupSort, IFilterSort } from "./types";
+import { IFilter, IFilterGroup } from '../typings'
+import { v4 as uuid } from 'uuid'
+import { IFilterGroupSort, IFilterSort } from './types'
 
 
 export function generateFilterGroupWithIDs(filterGroup: IFilterGroup): IFilterGroupSort {
@@ -9,15 +9,15 @@ export function generateFilterGroupWithIDs(filterGroup: IFilterGroup): IFilterGr
         id: uuid(),
         filters: filterGroup.filters.map(generateFilterWithID),
         groups: filterGroup.groups.map(generateFilterGroupWithIDs),
-    };
-    return newGroup;
+    }
+    return newGroup
 }
 
 function generateFilterWithID(filter: IFilter): IFilterSort {
     return {
         ...filter,
         id: uuid(),
-    };
+    }
 }
 
 export function convertToFilterGroup(groupSort: IFilterGroupSort): IFilterGroup {
@@ -25,8 +25,8 @@ export function convertToFilterGroup(groupSort: IFilterGroupSort): IFilterGroup 
         condition: groupSort.condition,
         filters: groupSort.filters.map(convertToFilter),
         groups: groupSort.groups.map(convertToFilterGroup),
-    };
-    return newGroup;
+    }
+    return newGroup
 }
 
 function convertToFilter(filterSort: IFilterSort): IFilter {
@@ -38,5 +38,5 @@ function convertToFilter(filterSort: IFilterSort): IFilter {
         includeCurrent: filterSort.includeCurrent,
         group: filterSort.group,
         disabled: filterSort.disabled,
-    };
+    }
 }

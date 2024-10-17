@@ -1,8 +1,8 @@
-import { TFilterCondition, TFilterLogicCondition } from "../typings";
+import { TFilterCondition, TFilterLogicCondition } from '../typings'
 
 export interface Group {
-    id: string;
-    child?: Group[];
+    id: string
+    child?: Group[]
 }
 
 export interface IFilterSort {

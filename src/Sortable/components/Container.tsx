@@ -1,18 +1,18 @@
-import { ReactSortable } from "react-sortablejs";
-import { IFilterGroupSort, IFilterSort } from "../types";
-import Wrapper from "./Wrapper";
+import { ReactSortable } from 'react-sortablejs'
+import { IFilterGroupSort, IFilterSort } from '../types'
+import { Wrapper } from './Wrapper'
 
 interface ContainerProps {
-    group: IFilterGroupSort;
-    groupsIndex: number[];
-    isRoot?: boolean;
+    group: IFilterGroupSort
+    groupsIndex: number[]
+    isRoot?: boolean
 
-    setList: (groupsIndex: number[], groups: IFilterGroupSort[]) => void;
-    setListFilters: (filtersIndex: number[], filters: IFilterSort[]) => void;
-    onEnd: () => void;
+    setList: (groupsIndex: number[], groups: IFilterGroupSort[]) => void
+    setListFilters: (filtersIndex: number[], filters: IFilterSort[]) => void
+    onEnd: () => void
 }
 
-const Container = (props: ContainerProps) => {
+export const Container = (props: ContainerProps) => {
     return (
         <ReactSortable
             list={props.group.groups ?? []}
@@ -20,11 +20,11 @@ const Container = (props: ContainerProps) => {
             animation={150}
             fallbackOnBody={true}
             swapThreshold={0.25}
-            ghostClass={"opacity-80"}
-            group={"shared"}
+            ghostClass={'opacity-80'}
+            group={'shared'}
             forceFallback={true}
             onEnd={props.onEnd}
-            handle=".GroupSortHandle"
+            handle='.GroupSortHandle'
         >
             {(props.group.groups ?? []).map((childBlock, index) => {
                 return (
@@ -36,10 +36,8 @@ const Container = (props: ContainerProps) => {
                         setListFilters={props.setListFilters}
                         onEnd={props.onEnd}
                     />
-                );
+                )
             })}
         </ReactSortable>
-    );
-};
-
-export default Container;
+    )
+}
