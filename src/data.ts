@@ -8,14 +8,14 @@ export const EXAMPLE_FILTER_GROUP: IFilterGroup = {
             groups: [],
             filters: [
                 {
-                    field: 'customers.email',
+                    field: 'AAA',
                     condition: TFilterCondition.eq,
-                    value: 'aaliyah.gerhold@example.com,aaliyah.haag@example.com,aaliyah.keeling@example.com',
+                    value: 'aaliyah.gerhold@example.com',
                     disabled: false,
                     group: '',
                 },
                 {
-                    field: 'customers.name',
+                    field: 'BBB',
                     condition: TFilterCondition.eq,
                     value: 'Aaliyah Keeling,Aaliyah Haag,Aaliyah Crist',
                     disabled: false,
@@ -25,25 +25,20 @@ export const EXAMPLE_FILTER_GROUP: IFilterGroup = {
         },
         {
             condition: TFilterLogicCondition.and,
-            groups: [],
-            filters: [],
-        },
-        {
-            condition: TFilterLogicCondition.and,
             groups: [
                 {
                     condition: TFilterLogicCondition.and,
                     groups: [],
                     filters: [
                         {
-                            field: 'customers.email',
+                            field: 'CCC',
                             condition: TFilterCondition.eq,
                             value: 'aaliyah.gerhold@example.com,aaliyah.haag@example.com,aaliyah.keeling@example.com',
                             disabled: false,
                             group: '',
                         },
                         {
-                            field: 'customers.name',
+                            field: 'DDD',
                             condition: TFilterCondition.eq,
                             value: 'Aaliyah Keeling,Aaliyah Haag,Aaliyah Crist',
                             disabled: false,
@@ -53,72 +48,17 @@ export const EXAMPLE_FILTER_GROUP: IFilterGroup = {
                 },
                 {
                     condition: TFilterLogicCondition.and,
-                    groups: [
-                        // {
-                        //     condition: TFilterLogicCondition.and,
-                        //     groups: [],
-                        //     filters: [
-                        //         {
-                        //             field: 'customers.email',
-                        //             condition: TFilterCondition.eq,
-                        //             value: 'aaliyah.gerhold@example.com,aaliyah.haag@example.com,aaliyah.keeling@example.com',
-                        //             disabled: false,
-                        //             group: '',
-                        //         },
-                        //         {
-                        //             field: 'customers.name',
-                        //             condition: TFilterCondition.eq,
-                        //             value: 'Aaliyah Keeling,Aaliyah Haag,Aaliyah Crist',
-                        //             disabled: false,
-                        //             group: '',
-                        //         },
-                        //         {
-                        //             field: 'customers.email',
-                        //             condition: TFilterCondition.eq,
-                        //             value: 'aaliyah.gerhold@example.com,aaliyah.haag@example.com,aaliyah.keeling@example.com',
-                        //             disabled: false,
-                        //             group: '',
-                        //         },
-                        //         {
-                        //             field: 'customers.name',
-                        //             condition: TFilterCondition.eq,
-                        //             value: 'Aaliyah Keeling,Aaliyah Haag,Aaliyah Crist',
-                        //             disabled: false,
-                        //             group: '',
-                        //         },
-                        //     ],
-                        // },
-                        // {
-                        //     condition: TFilterLogicCondition.and,
-                        //     groups: [],
-                        //     filters: [
-                        //         {
-                        //             field: 'customers.email',
-                        //             condition: TFilterCondition.eq,
-                        //             value: 'aaliyah.gerhold@example.com,aaliyah.haag@example.com,aaliyah.keeling@example.com',
-                        //             disabled: false,
-                        //             group: '',
-                        //         },
-                        //         {
-                        //             field: 'customers.name',
-                        //             condition: TFilterCondition.eq,
-                        //             value: 'Aaliyah Keeling,Aaliyah Haag,Aaliyah Crist',
-                        //             disabled: false,
-                        //             group: '',
-                        //         },
-                        //     ],
-                        // },
-                    ],
+                    groups: [],
                     filters: [
                         {
-                            field: 'products.name',
+                            field: 'EEE',
                             condition: TFilterCondition.eq,
                             value: 'Abominable Hoodie,Adrienne Trek Jacket',
                             disabled: false,
                             group: '',
                         },
                         {
-                            field: 'products.vendor',
+                            field: 'FFF',
                             condition: TFilterCondition.eq,
                             value: 'Aero',
                             disabled: false,
@@ -131,14 +71,14 @@ export const EXAMPLE_FILTER_GROUP: IFilterGroup = {
                     groups: [],
                     filters: [
                         {
-                            field: 'customers.email',
+                            field: 'GGG',
                             condition: TFilterCondition.eq,
                             value: 'aaliyah.gerhold@example.com,aaliyah.haag@example.com,aaliyah.keeling@example.com',
                             disabled: false,
                             group: '',
                         },
                         {
-                            field: 'customers.name',
+                            field: 'III',
                             condition: TFilterCondition.eq,
                             value: 'Aaliyah Keeling,Aaliyah Haag,Aaliyah Crist',
                             disabled: false,
@@ -149,14 +89,14 @@ export const EXAMPLE_FILTER_GROUP: IFilterGroup = {
             ],
             filters: [
                 {
-                    field: 'sales.gateway',
+                    field: 'JJJ',
                     condition: TFilterCondition.eq,
                     value: 'manual',
                     disabled: false,
                     group: '',
                 },
                 {
-                    field: 'locations.city',
+                    field: 'KKK',
                     condition: TFilterCondition.eq,
                     value: 'Richmond',
                     disabled: false,
@@ -167,14 +107,14 @@ export const EXAMPLE_FILTER_GROUP: IFilterGroup = {
     ],
     filters: [
         {
-            field: 'transactions.processed_at',
+            field: 'LLL',
             condition: TFilterCondition.named,
             value: 'last30Days',
             group: '',
             disabled: false,
         },
         {
-            field: 'customers.phone',
+            field: 'MMM',
             condition: TFilterCondition.nempty,
             value: '',
             disabled: false,

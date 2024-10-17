@@ -23,15 +23,13 @@ export const ContainerFilters = (props: ContainerProps) => {
             forceFallback={true}
             onEnd={props.onEnd}
             handle='.GroupSortHandle'
-
+            className='flex flex-col gap-2'
         >
             {(props.filters ?? []).map((filter) => { // , index
                 return (
-                    <div key={filter.id} className='flex items-center gap-4 justify-between'>
+                    <div key={filter.id} className='flex items-center gap-4 justify-between border border-slate-200 p-2 rounded'>
                         <div key={filter.id} className='flex items-center gap-4'>
-                            <div>{filter.condition}</div>
                             <div>{filter.field}</div>
-                            <div className='max-w-52 overflow-hidden text-ellipsis text-nowrap'>{filter.value}</div>
                         </div>
                         <div className='GroupSortHandle text-green-500 cursor-move'><i className='fa-solid fa-bars'></i></div>
                     </div>

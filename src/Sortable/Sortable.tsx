@@ -21,6 +21,7 @@ export const Sortable = () => {
                 <FiltersTree groups={filters} onChange={setGroups} />
             </div>
             <div className='lg:w-1/2 flex-grow-0'>
+                <h1 className='font-bold text-3xl text-slate-800'>Filter tree in Sorting component:</h1>
                 <ReactJson src={filters} collapseStringsAfterLength={40} enableClipboard={false} displayObjectSize={false} displayDataTypes={false} />
                 <h1 className='font-bold text-3xl text-slate-800'>Clear filter without ids:</h1>
                 <ReactJson src={clearFilters} collapseStringsAfterLength={40} enableClipboard={false} displayObjectSize={false} displayDataTypes={false} />
