@@ -26,22 +26,7 @@ export const EXAMPLE_FILTER_GROUP: IFilterGroup = {
         {
             condition: TFilterLogicCondition.and,
             groups: [],
-            filters: [
-                // {
-                //     field: 'customers.email',
-                //     condition: TFilterCondition.eq,
-                //     value: 'aaliyah.gerhold@example.com,aaliyah.haag@example.com,aaliyah.keeling@example.com',
-                //     disabled: false,
-                //     group: '',
-                // },
-                // {
-                //     field: 'customers.name',
-                //     condition: TFilterCondition.eq,
-                //     value: 'Aaliyah Keeling,Aaliyah Haag,Aaliyah Crist',
-                //     disabled: false,
-                //     group: '',
-                // },
-            ],
+            filters: [],
         },
         {
             condition: TFilterLogicCondition.and,

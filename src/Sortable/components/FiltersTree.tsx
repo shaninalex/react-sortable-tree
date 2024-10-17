@@ -9,7 +9,7 @@ interface GroupTreeProps {
 }
 
 const GROUP_CHANGE_PAYLOAD = ['currentList', 'groupsIndex']
-// const FILTER_CHANGE_PAYLOAD = ['currentFiltersList', 'filtersIndex']
+const FILTER_CHANGE_PAYLOAD = ['currentFiltersList', 'filtersIndex']
 
 // areKeysMatching - check what we change. It should prevent from crashing when
 // filter "want" to inset it self into group list or group into filters list.
@@ -30,26 +30,41 @@ export const FiltersTree = (props: GroupTreeProps) => {
     }
 
     const handleOnEnd = () => {
-        const attemps = [...ref.current]
-        if (!attemps.length) return
+        const attempts = [...ref.current]
+        if (!attempts.length) return
 
-        // change groups only if all attemts contain groupIndex and currentList properties
-        if (areKeysMatching(attemps, GROUP_CHANGE_PAYLOAD)) {
-            attemps.sort((a, b) => b.groupsIndex.length - a.groupsIndex.length)
+        if (areKeysMatching(attempts, GROUP_CHANGE_PAYLOAD)) {
+            // Handling group reordering
+            attempts.sort((a, b) => b.groupsIndex.length - a.groupsIndex.length)
             const tempList = [...groups]
-            let attempIndex = 0
-            while (attempIndex < attemps.length) {
-                const attemp = { ...attemps[attempIndex] }
-                attempIndex++
-                const _blockIndex = [...attemp.groupsIndex]
+            let attemptIndex = 0
+            while (attemptIndex < attempts.length) {
+                const attempt = { ...attempts[attemptIndex] }
+                attemptIndex++
+                const _blockIndex = [...attempt.groupsIndex]
                 const lastIndex = _blockIndex.pop()!
                 const lastArr = _blockIndex.reduce((arr, i) => arr[i]['groups'] ?? [], tempList)
-                lastArr[lastIndex]['groups'] = attemp.currentList
+                lastArr[lastIndex]['groups'] = attempt.currentList
             }
-            ref.current = []
+            onChange(tempList)
+
+        } else if (areKeysMatching(attempts, FILTER_CHANGE_PAYLOAD)) {
+            // Handling filter reordering
+            attempts.sort((a, b) => b.filtersIndex.length - a.filtersIndex.length)
+            const tempList = [...groups]
+            let attemptIndex = 0
+            while (attemptIndex < attempts.length) {
+                const attempt = { ...attempts[attemptIndex] }
+                attemptIndex++
+                const _filterIndex = [...attempt.filtersIndex]
+                const lastIndex = _filterIndex.pop()!
+                const lastArr = _filterIndex.reduce((arr, i) => arr[i]?.filters ?? [], tempList)
+                if (!lastArr[lastIndex]) continue // Avoid undefined issues
+                lastArr[lastIndex].filters = attempt.currentFiltersList
+            }
             onChange(tempList)
         } else {
-            console.log(attemps)
+            console.log('Invalid payload:', attempts)
         }
 
         // always clear "current"
