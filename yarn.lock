@@ -14,100 +14,6 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@dnd-kit/abstract@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@dnd-kit/abstract/-/abstract-0.0.5.tgz"
-  integrity sha512-1ANNxFkYqXgfUHrCZsjwrDbiCYJkneW738KnB7AIakq/Bg5f4C3M63UUzTmkX7Vbbngl9Cvnmw7/N8Nwp0dUlQ==
-  dependencies:
-    "@dnd-kit/geometry" "^0.0.5"
-    "@dnd-kit/state" "^0.0.5"
-    tslib "^2.6.2"
-
-"@dnd-kit/accessibility@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/@dnd-kit/accessibility/-/accessibility-3.1.0.tgz"
-  integrity sha512-ea7IkhKvlJUv9iSHJOnxinBcoOI3ppGnnL+VDJ75O45Nss6HtZd8IdN8touXPDtASfeI2T2LImb8VOZcL47wjQ==
-  dependencies:
-    tslib "^2.0.0"
-
-"@dnd-kit/collision@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@dnd-kit/collision/-/collision-0.0.5.tgz"
-  integrity sha512-rh9JwZiGnaq5hCR1Z1X4eWsA/wQiSDaYJnwnzvkidlwQBLJMwIKK1cs3FGjYSWTCDrtQvt1mzb1fow4w/MM4EA==
-  dependencies:
-    "@dnd-kit/abstract" "^0.0.5"
-    "@dnd-kit/geometry" "^0.0.5"
-    tslib "^2.6.2"
-
-"@dnd-kit/core@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/@dnd-kit/core/-/core-6.1.0.tgz"
-  integrity sha512-J3cQBClB4TVxwGo3KEjssGEXNJqGVWx17aRTZ1ob0FliR5IjYgTxl5YJbKTzA6IzrtelotH19v6y7uoIRUZPSg==
-  dependencies:
-    "@dnd-kit/accessibility" "^3.1.0"
-    "@dnd-kit/utilities" "^3.2.2"
-    tslib "^2.0.0"
-
-"@dnd-kit/dom@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@dnd-kit/dom/-/dom-0.0.5.tgz"
-  integrity sha512-0QyyOrxokMtuMPJh/qmTyINrEU0TmYbOLprw55wD6t1ftfZZQCpQE42etM25UlfrIGpy9zT4qcNh/yGPP+ebmA==
-  dependencies:
-    "@dnd-kit/abstract" "^0.0.5"
-    "@dnd-kit/collision" "^0.0.5"
-    "@dnd-kit/geometry" "^0.0.5"
-    "@dnd-kit/state" "^0.0.5"
-    tslib "^2.6.2"
-
-"@dnd-kit/geometry@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@dnd-kit/geometry/-/geometry-0.0.5.tgz"
-  integrity sha512-aBKYXSTIDW55iMd9jDrLSaikoebGZyn80sGalPxwjGgFr2FyiNCBkSy7lePZ/lrRfNTy1vMEqixFkt0EH6593g==
-  dependencies:
-    "@dnd-kit/state" "^0.0.5"
-    tslib "^2.6.2"
-
-"@dnd-kit/modifiers@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/@dnd-kit/modifiers/-/modifiers-7.0.0.tgz"
-  integrity sha512-BG/ETy3eBjFap7+zIti53f0PCLGDzNXyTmn6fSdrudORf+OH04MxrW4p5+mPu4mgMk9kM41iYONjc3DOUWTcfg==
-  dependencies:
-    "@dnd-kit/utilities" "^3.2.2"
-    tslib "^2.0.0"
-
-"@dnd-kit/react@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@dnd-kit/react/-/react-0.0.5.tgz"
-  integrity sha512-hpTmh3gEoMyhiXoUH+mqHPMETflfL5uwhD2V+rOYMpoRdCQLYovy5r251TY+avieb8d8J7YuIB1k8Hxoy9UJXA==
-  dependencies:
-    "@dnd-kit/abstract" "^0.0.5"
-    "@dnd-kit/dom" "^0.0.5"
-    "@dnd-kit/state" "^0.0.5"
-    tslib "^2.6.2"
-
-"@dnd-kit/sortable@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.npmjs.org/@dnd-kit/sortable/-/sortable-8.0.0.tgz"
-  integrity sha512-U3jk5ebVXe1Lr7c2wU7SBZjcWdQP+j7peHJfCspnA81enlu88Mgd7CC8Q+pub9ubP7eKVETzJW+IBAhsqbSu/g==
-  dependencies:
-    "@dnd-kit/utilities" "^3.2.2"
-    tslib "^2.0.0"
-
-"@dnd-kit/state@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@dnd-kit/state/-/state-0.0.5.tgz"
-  integrity sha512-w+GE/FUhIAoJUuPBR8yWvpdT+85R0xJyWE6ImaNTGQlplCeraxkiLAvYFI46uD8ZcE9nRXl3zIyk7gFlC0tzrQ==
-  dependencies:
-    "@preact/signals-core" "^1.6.0"
-    tslib "^2.6.2"
-
-"@dnd-kit/utilities@^3.2.2":
-  version "3.2.2"
-  resolved "https://registry.npmjs.org/@dnd-kit/utilities/-/utilities-3.2.2.tgz"
-  integrity sha512-+MKAJEOfaBe5SmV6t34p80MMKhjvUz0vRrvVJbPT0WElzaOJ/1xs+D+KDv+tD/NE5ujfrChEcshd4fLn0wpiqg==
-  dependencies:
-    tslib "^2.0.0"
-
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.21.5.tgz#c7184a326533fcdf1b8ee0733e21c713b975575f"
@@ -373,11 +279,6 @@
   version "0.11.0"
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
-
-"@preact/signals-core@^1.6.0":
-  version "1.8.0"
-  resolved "https://registry.npmjs.org/@preact/signals-core/-/signals-core-1.8.0.tgz"
-  integrity sha512-OBvUsRZqNmjzCZXWLxkZfhcgT+Fk8DDcT/8vD6a1xhDemodyy87UJRJfASMuSD8FaAIeGgGm85ydXhm7lr4fyA==
 
 "@rollup/rollup-android-arm-eabi@4.24.0":
   version "4.24.0"
@@ -1993,11 +1894,6 @@ ts-interface-checker@^0.1.9:
   version "0.1.13"
   resolved "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz"
   integrity sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
-
-tslib@^2.0.0, tslib@^2.6.2:
-  version "2.8.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.8.0.tgz"
-  integrity sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
