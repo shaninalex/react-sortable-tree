@@ -1,19 +1,17 @@
 import { useRef } from "react";
-import { Group } from "./types";
+import { IFilterGroupSort } from "../types";
 import Wrapper from "./Wrapper";
 
 interface GroupTreeProps {
-    groups: Group[];
-    onChange: (groups: Group[]) => void;
+    groups: IFilterGroupSort[];
+    onChange: (groups: IFilterGroupSort[]) => void;
 }
 
-const GroupTree = ({
-    groups,
-    onChange: handleChangeGroups
-}: GroupTreeProps) => {
+const GroupTree = (props: GroupTreeProps) => {
+    const { groups, onChange } = props
     const ref = useRef<any[]>([]);// eslint-disable-line
 
-    const handleSetGroups = (groupsIndex: number[], currentList: Group[]) => {
+    const handleSetGroups = (groupsIndex: number[], currentList: IFilterGroupSort[]) => {
         ref.current.push({ groupsIndex, currentList });
     };
 
@@ -28,14 +26,11 @@ const GroupTree = ({
             attempIndex++;
             const _blockIndex = [...attemp.groupsIndex];
             const lastIndex = _blockIndex.pop()!;
-            const lastArr = _blockIndex.reduce(
-                (arr, i) => arr[i]["child"] ?? [],
-                tempList
-            );
-            lastArr[lastIndex]["child"] = attemp.currentList;
+            const lastArr = _blockIndex.reduce((arr, i) => arr[i]["groups"] ?? [], tempList);
+            lastArr[lastIndex]["groups"] = attemp.currentList;
         }
         ref.current = [];
-        handleChangeGroups(tempList);
+        onChange(tempList);
     };
 
     return (

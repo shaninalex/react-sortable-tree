@@ -1,47 +1,38 @@
 import { ReactSortable } from "react-sortablejs";
-import { Group } from "./types";
+import { IFilterGroupSort } from "../types";
 import Wrapper from "./Wrapper";
 
 interface ContainerProps {
-    group: Group;
+    group: IFilterGroupSort;
     groupsIndex: number[];
-    setList: (groupsIndex: number[], groups: Group[]) => void;
-    onEnd: () => void;
     isRoot?: boolean;
+
+    setList: (groupsIndex: number[], groups: IFilterGroupSort[]) => void;
+    onEnd: () => void;
 }
 
-const Container = ({
-    group,
-    groupsIndex,
-    setList,
-    onEnd,
-}: ContainerProps) => {
-
-    const sortableOptions = {
-        animation: 150,
-        fallbackOnBody: true,
-        swapThreshold: 0.65,
-        ghostClass: "ghost",
-        group: "shared",
-        forceFallback: true
-    };
-
+const Container = (props: ContainerProps) => {
     return (
         <ReactSortable
-            list={group.child ?? []}
-            setList={(s1, _s2, s3) => s3.dragging && setList(groupsIndex, s1)}
-            {...sortableOptions}
-            onEnd={onEnd}
-            style={{ minHeight: "20px" }}
+            list={props.group.groups ?? []}
+            setList={(s1, _s2, s3) => s3.dragging && props.setList(props.groupsIndex, s1)}
+            animation={150}
+            fallbackOnBody={true}
+            swapThreshold={0.25}
+            ghostClass={"ghost"}
+            group={"shared"}
+            forceFallback={true}
+            onEnd={props.onEnd}
+            handle=".GroupSortHandle"
         >
-            {(group.child ?? []).map((childBlock, index) => {
+            {(props.group.groups ?? []).map((childBlock, index) => {
                 return (
                     <Wrapper
                         key={childBlock.id}
                         group={childBlock}
-                        groupsIndex={[...groupsIndex, index]}
-                        setList={setList}
-                        onEnd={onEnd}
+                        groupsIndex={[...props.groupsIndex, index]}
+                        setList={props.setList}
+                        onEnd={props.onEnd}
                     />
                 );
             })}

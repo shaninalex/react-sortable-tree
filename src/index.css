@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+pre .string {
+    color: green;
+}
+
+pre .number {
+    color: darkorange;
+}
+
+pre .boolean {
+    color: blue;
+}
+
+pre .null {
+    color: magenta;
+}
+
+pre .key {
+    color: red;
+}
+
+pre .key.group {
+    color: rgb(76, 19, 109);
+}
+
+pre .key.filter {
+    color: rgb(0, 68, 20);
+}
