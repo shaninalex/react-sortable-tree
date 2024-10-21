@@ -1,11 +1,12 @@
 import _ from 'lodash'
 import { useRef } from 'react'
-import { IFilterGroupSort, IFilterSort } from '../types'
 import { Wrapper } from './Wrapper'
+import { IFilterGroup, IFilter } from '../../typings'
+import { v4 as uuid } from "uuid";
 
 interface GroupTreeProps {
-    groups: IFilterGroupSort[]
-    onChange: (groups: IFilterGroupSort[]) => void
+    groups: IFilterGroup[]
+    onChange: (groups: IFilterGroup[]) => void
 }
 
 const GROUP_CHANGE_PAYLOAD = ['currentList', 'groupsIndex']
@@ -41,12 +42,12 @@ export const FiltersTree = (props: GroupTreeProps) => {
         ref.current = []
     }
 
-    const handleSetGroups = (groupsIndex: number[], currentList: IFilterGroupSort[]) => {
+    const handleSetGroups = (groupsIndex: number[], currentList: IFilterGroup[]) => {
         ref.current.push({ groupsIndex, currentList })
     }
 
     // Handling group reordering
-    const reorderGroups = (attempts: any[], tempList: IFilterGroupSort[]) => {// eslint-disable-line
+    const reorderGroups = (attempts: any[], tempList: IFilterGroup[]) => {// eslint-disable-line
         attempts.sort((a, b) => b.groupsIndex.length - a.groupsIndex.length)
         let attemptIndex = 0
         while (attemptIndex < attempts.length) {
@@ -60,12 +61,12 @@ export const FiltersTree = (props: GroupTreeProps) => {
         onChange(tempList)
     }
 
-    const handleSetListFilters = (filtersIndex: number[], currentFiltersList: IFilterSort[]) => {
+    const handleSetListFilters = (filtersIndex: number[], currentFiltersList: IFilter[]) => {
         ref.current.push({ filtersIndex, currentFiltersList })
     }
 
     // Handling filters reordering
-    const reorderFilters = (attempts: any[], tempList: IFilterGroupSort[]) => {// eslint-disable-line
+    const reorderFilters = (attempts: any[], tempList: IFilterGroup[]) => {// eslint-disable-line
         attempts.sort((a, b) => b.filtersIndex.length - a.filtersIndex.length)
         attempts.forEach(attempt => {
             const _filterIndex = [...attempt.filtersIndex]
@@ -80,7 +81,7 @@ export const FiltersTree = (props: GroupTreeProps) => {
     return (
         <div>
             <Wrapper
-                key={groups[0].id}
+                key={uuid()}
                 group={groups[0]}
                 groupsIndex={[0]}
                 setList={handleSetGroups}
