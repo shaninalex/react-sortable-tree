@@ -1,7 +1,5 @@
-import { IFilter, IFilterGroup } from '../typings'
+import { IFilterGroup, IFilterGroupSort, IFilter, IFilterSort } from "./typings"
 import { v4 as uuid } from 'uuid'
-import { IFilterGroupSort, IFilterSort } from './types'
-
 
 export function generateFilterGroupWithIDs(filterGroup: IFilterGroup): IFilterGroupSort {
     const newGroup: IFilterGroupSort = {
