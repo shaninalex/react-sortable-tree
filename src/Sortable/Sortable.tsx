@@ -7,7 +7,7 @@ import { IFilterGroupSort, IFilterSort } from '../typings';
 import { generateFilterGroupWithIDs } from '../utils';
 import { EXAMPLE_FILTER_GROUP } from '../data';
 import { SortableFilterWrapper, SortableGroupWrapper } from './components'
-import { addFilterToGroup, findFilterById, findGroupByFilterID, removeFilterById } from './utils';
+import { addFilterToGroup, findFilterById, findGroupByFilterID, findGroupById, findItemById, removeFilterById } from './utils';
 
 
 export const Sortable = () => {
@@ -31,7 +31,12 @@ export const Sortable = () => {
     const handleDragOver = (event: DragOverEvent) => {
         const { active, over } = event;
         if (!over || !activeFilter) return;
-        const overContainer = findGroupByFilterID(tree[0], over.id as string)
+        let overContainer = findGroupByFilterID(tree[0], over.id as string)
+        if (!overContainer) {
+            console.log(over)
+            const group = findGroupById(tree[0], over.id as string)
+            if (group) overContainer = group
+        }
         const activeContainer = findGroupByFilterID(tree[0], active.id as string)
         if (overContainer && activeContainer) {
             if (activeContainer.id !== overContainer.id) {

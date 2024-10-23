@@ -1,6 +1,15 @@
 import _ from "lodash";
 import { IFilterGroupSort, IFilterSort } from "../typings";
 
+export function findGroupById(tree: IFilterGroupSort, groupId: string): IFilterGroupSort | null {
+    if (tree.id === groupId) return tree;
+    for (const group of tree.groups) {
+        const foundGroup = findGroupById(group, groupId)
+        if (foundGroup) return foundGroup
+    }
+    return null
+}
+
 export function findGroupByFilterID(tree: IFilterGroupSort, filterId: string): IFilterGroupSort | null {
     const filter = tree.filters.find(f => f.id === filterId);
     if (filter) return tree;
@@ -28,6 +37,23 @@ export function findFilterById(tree: IFilterGroupSort, targetId: string): IFilte
     }
     return null;
 }
+
+// TODO: refactor findGroupByFilterID and findFilterById to use single function
+export function findItemById(
+    tree: IFilterGroupSort,
+    targetId: string
+): { group: IFilterGroupSort | null, filter: IFilterSort | null } {
+    const filter = tree.filters.find(f => f.id === targetId);
+    if (filter) return { group: tree, filter };
+    for (const group of tree.groups) {
+        const result = findItemById(group, targetId);
+        if (result.filter || result.group) {
+            return result;
+        }
+    }
+    return { group: null, filter: null };
+}
+
 
 export function removeFilterById(tree: IFilterGroupSort[], targetId: string): IFilterSort | null {
     for (const group of tree) {
