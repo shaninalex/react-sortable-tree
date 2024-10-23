@@ -4,10 +4,10 @@ import ReactJson from 'react-json-view'
 import { CSS } from '@dnd-kit/utilities'
 import { closestCorners, DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { IFilterGroupSort, IFilterSort } from '../typings';
+import { IFilter, IFilterGroupSort, IFilterSort } from '../typings';
 import { generateFilterGroupWithIDs } from '../utils';
 import { EXAMPLE_FILTER_GROUP } from '../data';
-import _, { find } from 'lodash';
+import _, { filter, find } from 'lodash';
 
 
 interface SortableFilterWrapperProps {
@@ -32,7 +32,7 @@ export const SortableFilterWrapper = (props: SortableFilterWrapperProps) => {
     return (
         <div className='p-3 border rounded bg-white' ref={setNodeRef} style={style} {...attributes} {...listeners}>
             <div className='mb-2'>
-                Filter: {filter.id.split('-')[0]}
+                {filter.field}: {filter.id.split('-')[0]}
             </div>
         </div>
     )
@@ -75,17 +75,30 @@ export const Sortable = () => {
 
     const handleDragStart = (event: DragStartEvent) => {
         const filter = findFilterById(tree[0], event.active.id as string)
-        console.log(filter)
         if (!filter) return
         setActiveFilter(filter)
     }
 
     const handleDragOver = (event: DragOverEvent) => {
-        // console.log(event);
+        const { active, over } = event;
+        if (!over || !activeFilter) return;
+        const overContainer = findGroupByFilterID(tree[0], over.id as string)
+        const activeContainer = findGroupByFilterID(tree[0], active.id as string)
+        if (overContainer && activeContainer) {
+            if (activeContainer.id !== overContainer.id) {
+                setTree((prevTree) => {
+                    const filterToMove = removeFilterById(prevTree, activeFilter.id);
+                    if (!filterToMove) return prevTree;
+
+                    addFilterToGroup(prevTree, overContainer.id, filterToMove);
+                    return [...prevTree];
+                });
+            }
+        }
     }
 
     const handleDragEnd = (event: DragEndEvent) => {
-        // console.log(event);
+        // console.log("End: ", event);
     }
 
     return (
@@ -106,6 +119,20 @@ export const Sortable = () => {
     )
 }
 
+function findGroupByFilterID(tree: IFilterGroupSort, filterId: string): IFilterGroupSort | null {
+    const filter = _.find(tree.filters, { id: filterId });
+    if (filter) return tree
+
+    if (tree.groups && tree.groups.length > 0) {
+        for (const group of tree.groups) {
+            const filter = findGroupByFilterID(group, filterId)
+            if (filter) {
+                return group
+            }
+        }
+    }
+    return null
+}
 
 
 function findFilterById(tree: IFilterGroupSort, targetId: string): IFilterSort | null {
@@ -113,14 +140,39 @@ function findFilterById(tree: IFilterGroupSort, targetId: string): IFilterSort |
     if (filter) return filter
     if (tree.groups && tree.groups.length > 0) {
         for (const group of tree.groups) {
-            const result = findFilterById(group, targetId);
+            const result = findFilterById(group, targetId)
             if (result) {
-                return result;
+                return result
             }
         }
     }
     return null;
 }
+
+function removeFilterById(tree: IFilterGroupSort[], targetId: string): IFilterSort | null {
+    for (const group of tree) {
+        const filterIndex = group.filters.findIndex(f => f.id === targetId);
+        if (filterIndex !== -1) {
+            return group.filters.splice(filterIndex, 1)[0];
+        }
+        const result = removeFilterById(group.groups, targetId);
+        if (result) return result;
+    }
+    return null;
+}
+
+function addFilterToGroup(tree: IFilterGroupSort[], targetId: string, filterToAdd: IFilterSort) {
+    for (const group of tree) {
+        if (group.id === targetId) {
+            group.filters.push(filterToAdd)
+            return true
+        }
+        const result = addFilterToGroup(group.groups, targetId, filterToAdd);
+        if (result) return true;
+    }
+    return false;
+}
+
 
 function removeGroupById(tree: IFilterGroupSort[], targetId: string): IFilterGroupSort | null {
     for (const group of tree) {
