@@ -12,7 +12,7 @@ import { addFilterToGroup, findFilterById, findGroupByFilterID, findGroupById, r
 
 export const Sortable = () => {
     const [tree, setTree] = useState<IFilterGroupSort[]>([generateFilterGroupWithIDs(EXAMPLE_FILTER_GROUP)])
-    // const [activeGroup, setActiveGroup] = useState<IFilterGroupSort | null>(null)
+    const [activeGroup, setActiveGroup] = useState<IFilterGroupSort | null>(null)
     const [activeFilter, setActiveFilter] = useState<IFilterSort | null>(null);
 
     const sensors = useSensors(
@@ -26,7 +26,13 @@ export const Sortable = () => {
         const filter = findFilterById(tree[0], event.active.id as string)
         if (filter) {
             setActiveFilter(filter)
-        } else {
+            setActiveGroup(null)
+            return
+        }
+        
+        const group = findGroupById(tree[0], event.active.id as string)
+        if (filter) {
+            setActiveGroup(group)
             setActiveFilter(null)
         }
     }
@@ -75,7 +81,7 @@ export const Sortable = () => {
                 <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragOver={handleDragOver}> {/* onDragEnd={handleDragEnd} */}
                     <DragOverlay>
                         {activeFilter ? <SortableFilterWrapper filter={activeFilter} /> : null}
-                        {/* activeGroup */}
+                        {activeGroup ? <SortableGroupWrapper id={activeGroup.id} group={activeGroup} /> : null}
                     </DragOverlay>
                     {tree.map(group => <SortableGroupWrapper key={group.id} id={group.id} group={group} />)}
                 </DndContext>

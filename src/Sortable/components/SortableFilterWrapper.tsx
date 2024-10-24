@@ -15,7 +15,6 @@ export const SortableFilterWrapper = (props: SortableFilterWrapperProps) => {
         transition,
         isDragging,
     } = useSortable({ id: props.filter.id });
-
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
