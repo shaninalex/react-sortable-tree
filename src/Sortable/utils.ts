@@ -75,13 +75,13 @@ export function removeGroupById(tree: IFilterGroupSort[], targetId: string): IFi
 }
 
 
-export function addGroupToTarget(tree: IFilterGroupSort[], targetId: string, groupToAdd: IFilterGroupSort) {
+export function addGroupToGroup(tree: IFilterGroupSort[], targetId: string, groupToAdd: IFilterGroupSort): boolean {
     for (const group of tree) {
         if (group.id === targetId) {
             group.groups.push(groupToAdd);
             return true;
         }
-        const result = addGroupToTarget(group.groups, targetId, groupToAdd);
+        const result = addGroupToGroup(group.groups, targetId, groupToAdd);
         if (result) return true;
     }
     return false;
@@ -92,4 +92,25 @@ export function extractPrefixAndUUID(id: string): string[] {
     const prefix = id.substring(0, indexOfFirstDash);
     const uuid = id.substring(indexOfFirstDash + 1);
     return [prefix, uuid];
+}
+
+export function findParentGroupById(tree: IFilterGroupSort, groupID: string): IFilterGroupSort | null {
+    for (const group of tree.groups) {
+        if (group.id === groupID) return tree;
+        const parent = findParentGroupById(group, groupID);
+        if (parent) return parent;
+    }
+    return null;
+}
+
+export function swapGroupsInParent(tree: IFilterGroupSort[], parentGroupId: string, activeGroupId: string, overGroupId: string): IFilterGroupSort[] {
+    const parentGroup = findGroupById(tree[0], parentGroupId);
+    if (!parentGroup) return tree;
+    const activeGroupIndex = parentGroup.groups.findIndex(group => group.id === activeGroupId);
+    const overGroupIndex = parentGroup.groups.findIndex(group => group.id === overGroupId);
+    if (activeGroupIndex === -1 || overGroupIndex === -1) return tree;
+    const temp = parentGroup.groups[activeGroupIndex];
+    parentGroup.groups[activeGroupIndex] = parentGroup.groups[overGroupIndex];
+    parentGroup.groups[overGroupIndex] = temp;
+    return [...tree];
 }
