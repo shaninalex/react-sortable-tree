@@ -7,7 +7,7 @@ import { IFilterGroupSort, IFilterSort } from '../typings';
 import { generateFilterGroupWithIDs } from '../utils';
 import { EXAMPLE_FILTER_GROUP } from '../data';
 import { SortableFilterWrapper, SortableGroupWrapper } from './components'
-import { addFilterToGroup, findFilterById, findGroupByFilterID, findGroupById, findItemById, removeFilterById } from './utils';
+import { addFilterToGroup, findFilterById, findGroupByFilterID, findGroupById, removeFilterById } from './utils';
 
 
 export const Sortable = () => {
@@ -24,8 +24,11 @@ export const Sortable = () => {
 
     const handleDragStart = (event: DragStartEvent) => {
         const filter = findFilterById(tree[0], event.active.id as string)
-        if (!filter) return
-        setActiveFilter(filter)
+        if (filter) {
+            setActiveFilter(filter)
+        } else {
+            setActiveFilter(null)
+        }
     }
 
     const handleDragOver = (event: DragOverEvent) => {
