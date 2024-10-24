@@ -38,23 +38,6 @@ export function findFilterById(tree: IFilterGroupSort, targetId: string): IFilte
     return null;
 }
 
-// TODO: refactor findGroupByFilterID and findFilterById to use single function
-export function findItemById(
-    tree: IFilterGroupSort,
-    targetId: string
-): { group: IFilterGroupSort | null, filter: IFilterSort | null } {
-    const filter = tree.filters.find(f => f.id === targetId);
-    if (filter) return { group: tree, filter };
-    for (const group of tree.groups) {
-        const result = findItemById(group, targetId);
-        if (result.filter || result.group) {
-            return result;
-        }
-    }
-    return { group: null, filter: null };
-}
-
-
 export function removeFilterById(tree: IFilterGroupSort[], targetId: string): IFilterSort | null {
     for (const group of tree) {
         const filterIndex = group.filters.findIndex(f => f.id === targetId);
@@ -79,27 +62,34 @@ export function addFilterToGroup(tree: IFilterGroupSort[], targetId: string, fil
     return false;
 }
 
-// function removeGroupById(tree: IFilterGroupSort[], targetId: string): IFilterGroupSort | null {
-//     for (const group of tree) {
-//         const index = group.groups.findIndex(g => g.id === targetId);
-//         if (index !== -1) {
-//             return group.groups.splice(index, 1)[0];
-//         }
-//         const result = removeGroupById(group.groups, targetId);
-//         if (result) return result;
-//     }
-//     return null;
-// }
+export function removeGroupById(tree: IFilterGroupSort[], targetId: string): IFilterGroupSort | null {
+    for (const group of tree) {
+        const index = group.groups.findIndex(g => g.id === targetId);
+        if (index !== -1) {
+            return group.groups.splice(index, 1)[0];
+        }
+        const result = removeGroupById(group.groups, targetId);
+        if (result) return result;
+    }
+    return null;
+}
 
 
-// function addGroupToTarget(tree: IFilterGroupSort[], targetId: string, groupToAdd: IFilterGroupSort) {
-//     for (const group of tree) {
-//         if (group.id === targetId) {
-//             group.groups.push(groupToAdd);
-//             return true;
-//         }
-//         const result = addGroupToTarget(group.groups, targetId, groupToAdd);
-//         if (result) return true;
-//     }
-//     return false;
-// }
+export function addGroupToTarget(tree: IFilterGroupSort[], targetId: string, groupToAdd: IFilterGroupSort) {
+    for (const group of tree) {
+        if (group.id === targetId) {
+            group.groups.push(groupToAdd);
+            return true;
+        }
+        const result = addGroupToTarget(group.groups, targetId, groupToAdd);
+        if (result) return true;
+    }
+    return false;
+}
+
+export function extractPrefixAndUUID(id: string): string[] {
+    const indexOfFirstDash = id.indexOf('-');
+    const prefix = id.substring(0, indexOfFirstDash);
+    const uuid = id.substring(indexOfFirstDash + 1);
+    return [prefix, uuid];
+}

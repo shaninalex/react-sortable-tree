@@ -7,7 +7,7 @@ import { IFilterGroupSort, IFilterSort } from '../typings';
 import { generateFilterGroupWithIDs } from '../utils';
 import { EXAMPLE_FILTER_GROUP } from '../data';
 import { SortableFilterWrapper, SortableGroupWrapper } from './components'
-import { addFilterToGroup, findFilterById, findGroupByFilterID, findGroupById, removeFilterById } from './utils';
+import { extractPrefixAndUUID, findFilterById, findGroupById } from './utils';
 
 
 export const Sortable = () => {
@@ -45,9 +45,43 @@ export const Sortable = () => {
 
     const handleDragOver = (event: DragOverEvent) => {
         const { active, over } = event;
-        console.log(active, over)
+        if (!active || !over) return
 
-        // TODO: handle drag over based on new id prefixes logic
+        // active.id and over.id have prefixes - "filter-", "filters-", "group-", "groups-"
+        // extract both prefixes and both uuids
+        const [overPrefix, overID] = extractPrefixAndUUID(over.id as string)
+        const [activePrefix, activeID] = extractPrefixAndUUID(active.id as string)
+        
+        // TODO: get active parent group, and over parent group
+        // It will help us understand exectly what and where we moving
+
+        // There are collition logic:
+        // #1
+        // if group && group -- moving groups in same container ( also see #3 )
+        if (activePrefix === 'group' && overPrefix === 'group') {
+            console.log(activePrefix, activeID, '  -  ', overPrefix, overID)
+        }
+
+        // #2
+        // if group && groups -- inserting group into new container
+        if (activePrefix === 'group' && overPrefix === 'groups') {
+            console.log(activePrefix, activeID, '  -  ', overPrefix, overID)
+        }
+
+        // #3
+        // if filter && filter -- moving filter in same container
+        // Need additionaly check if they are in same container.
+        // if filterA and filterB have different parents it meens you move filterA to another group and now hovering around filterB from that group.
+        if (activePrefix === 'filter' && overPrefix === 'filter') {
+            console.log(activePrefix, activeID, '  -  ', overPrefix, overID)
+        }
+
+        // #4
+        // if filter && filters -- inserting filter into new container ( NOTE: this condition is never heppends )
+
+        // TODO: also need to check and properly handle situation on moving groups/filters into empty list of groups or filters
+
+        // all other collitions is not interesting. Because we can't insert filter in group or groups. And vice versa...
     }
 
     return (
