@@ -1,1 +1,2 @@
-export * from './FiltersTree'
+export * from './SortableFilterWrapper'
+export * from './SortableGroupWrapper'
