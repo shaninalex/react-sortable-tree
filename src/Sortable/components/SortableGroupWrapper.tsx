@@ -7,37 +7,42 @@ import { CSS } from '@dnd-kit/utilities'
 interface SortableGroupWrapperProps {
     id: string
     group: IFilterGroupSort
+    root?: boolean
 }
 export const SortableGroupWrapper = (props: SortableGroupWrapperProps) => {
     const { group, id } = props;
 
     // Sortable setup
-    const sortHook = useSortable({ id });
-    const sortTransition = sortHook.transition
+    const sortHook = useSortable({ id: `group-${id}` });
+    const sortTransition = sortHook.transition;
     const groupSortstyle = {
         transform: CSS.Transform.toString(sortHook.transform),
-        sortTransition,
+        transition: sortTransition,
         opacity: sortHook.isDragging ? 0.5 : 1,
         zIndex: sortHook.isDragging ? 1 : 'auto',
     };
 
-    // Droppable setup
-    const dropHook = useDroppable({ id });
+    // Droppable setup for filters
+    const dropHook = useDroppable({ id: `filters-${id}` });
     const filterDropstyle = { backgroundColor: dropHook.isOver ? 'lightgreen' : 'white', border: '1px dashed lightgray' };
+
+    // Droppable setup for groups
+    const groupDropHook = useDroppable({ id: `groups-${id}` });
+    const groupDropStyle = { backgroundColor: groupDropHook.isOver ? 'lightblue' : 'lightgreen', border: '1px dashed lightgray' };
 
     return (
         <div ref={sortHook.setNodeRef} style={groupSortstyle}
             className='p-3 border rounded border-slate-800 mb-2'>
             <div className='flex items-center justify-between mb-2'>
                 <div>Group: {id.split('-')[0]}</div>
-                <button className='border rounded px-2' {...sortHook.attributes} {...sortHook.listeners}><i className="fa-solid fa-grip-vertical"></i></button>
+                {!props.root ? (<button className='border rounded px-2' {...sortHook.attributes} {...sortHook.listeners}><i className="fa-solid fa-grip-vertical"></i></button>) : null}
             </div>
 
             {/* Droppable Area for Filters */}
             <div ref={dropHook.setNodeRef}
                 className='p-2 rounded border bg-blue-100 mb-2'
                 style={group.filters.length === 0 ? filterDropstyle : {}}>
-                <SortableContext items={group.filters} strategy={verticalListSortingStrategy}>
+                <SortableContext items={group.filters.length > 0 ? group.filters.map(f => f.id) : []} strategy={verticalListSortingStrategy}>
                     {group.filters.length > 0 ? (
                         group.filters.map(f => <SortableFilterWrapper key={f.id} filter={f} />)
                     ) : (
@@ -47,10 +52,16 @@ export const SortableGroupWrapper = (props: SortableGroupWrapperProps) => {
             </div>
 
             {/* Droppable Area for Groups */}
-            <div className='p-2 rounded border bg-green-100'>
-                {group.groups.map(group => (
-                    <SortableGroupWrapper key={group.id} id={group.id} group={group} />
-                ))}
+            <div ref={groupDropHook.setNodeRef} className='p-2 rounded border bg-green-100' style={group.groups.length === 0 ? groupDropStyle : {}}>
+                <SortableContext items={group.groups.length > 0 ? group.groups.map(f => f.id) : []} strategy={verticalListSortingStrategy}>
+                    {group.groups.length > 0 ? (
+                        group.groups.map(g => (
+                            <SortableGroupWrapper key={g.id} id={g.id} group={g} />
+                        ))
+                    ) : (
+                        <div className="text-center text-gray-500">Drop group here</div>
+                    )}
+                </SortableContext>
             </div>
         </div>
     );

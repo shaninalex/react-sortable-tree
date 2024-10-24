@@ -23,67 +23,42 @@ export const Sortable = () => {
     )
 
     const handleDragStart = (event: DragStartEvent) => {
-        const filter = findFilterById(tree[0], event.active.id as string)
-        if (filter) {
-            setActiveFilter(filter)
-            setActiveGroup(null)
-            return
+        const activeId = event.active.id as string;
+        if (activeId.startsWith('filter-')) {
+            // Extract actual filter id by removing 'filter-' prefix
+            const filterId = activeId.replace('filter-', '');
+            const filter = findFilterById(tree[0], filterId);
+            if (filter) {
+                setActiveGroup(null);
+                setActiveFilter(filter);
+            }
+        } else if (activeId.startsWith('group-')) {
+            // Extract actual group id by removing 'group-' prefix
+            const groupId = activeId.replace('group-', '');
+            const group = findGroupById(tree[0], groupId);
+            if (group) {
+                setActiveFilter(null);
+                setActiveGroup(group);
+            }
         }
-        
-        const group = findGroupById(tree[0], event.active.id as string)
-        if (filter) {
-            setActiveGroup(group)
-            setActiveFilter(null)
-        }
-    }
+    };
 
     const handleDragOver = (event: DragOverEvent) => {
         const { active, over } = event;
-        if (!over || !activeFilter) return;
-        let overContainer = findGroupByFilterID(tree[0], over.id as string)
-        if (!overContainer) {
-            console.log(over)
-            const group = findGroupById(tree[0], over.id as string)
-            if (group) overContainer = group
-        }
-        const activeContainer = findGroupByFilterID(tree[0], active.id as string)
-        if (overContainer && activeContainer) {
-            if (activeContainer.id !== overContainer.id) {
-                setTree((prevTree) => {
-                    const filterToMove = removeFilterById(prevTree, activeFilter.id);
-                    if (!filterToMove) return prevTree;
+        console.log(active, over)
 
-                    addFilterToGroup(prevTree, overContainer.id, filterToMove);
-                    return [...prevTree];
-                });
-            }
-        }
-        if (activeContainer && overContainer && activeContainer.id === overContainer.id) {
-            setTree((prevTree) => {
-                const activeIndex = activeContainer.filters.findIndex(f => f.id === active.id);
-                const overIndex = overContainer.filters.findIndex(f => f.id === over.id);
-
-                if (activeIndex !== -1 && overIndex !== -1) {
-                    const [movedFilter] = activeContainer.filters.splice(activeIndex, 1);
-                    activeContainer.filters.splice(overIndex, 0, movedFilter);
-                }
-
-                return [...prevTree];
-            });
-        }
+        // TODO: handle drag over based on new id prefixes logic
     }
-
-    // const handleDragEnd = (event: DragEndEvent) => {}
 
     return (
         <div className='lg:flex gap-8'>
             <div className='lg:w-1/2 flex-grow-0'>
-                <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragOver={handleDragOver}> {/* onDragEnd={handleDragEnd} */}
+                <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragOver={handleDragOver}>
                     <DragOverlay>
                         {activeFilter ? <SortableFilterWrapper filter={activeFilter} /> : null}
-                        {activeGroup ? <SortableGroupWrapper id={activeGroup.id} group={activeGroup} /> : null}
+                        {activeGroup ? <SortableGroupWrapper id={activeGroup.id} group={activeGroup} root /> : null}
                     </DragOverlay>
-                    {tree.map(group => <SortableGroupWrapper key={group.id} id={group.id} group={group} />)}
+                    {tree.map(group => <SortableGroupWrapper key={group.id} id={group.id} group={group} root />)}
                 </DndContext>
             </div>
             <div className='lg:w-1/2 flex-grow-0'>
