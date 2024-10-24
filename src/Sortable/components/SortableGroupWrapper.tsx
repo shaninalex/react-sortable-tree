@@ -1,6 +1,5 @@
 import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { IFilterGroupSort } from "../../typings";
-import { SortableFilterWrapper } from "./SortableFilterWrapper";
 import { useDroppable } from "@dnd-kit/core";
 import { CSS } from '@dnd-kit/utilities'
 
@@ -23,8 +22,8 @@ export const SortableGroupWrapper = (props: SortableGroupWrapperProps) => {
     };
 
     // Droppable setup for filters
-    const dropHook = useDroppable({ id: `filters-${id}` });
-    const filterDropstyle = { backgroundColor: dropHook.isOver ? 'lightgreen' : 'white', border: '1px dashed lightgray' };
+    // const dropHook = useDroppable({ id: `filters-${id}` });
+    // const filterDropstyle = { backgroundColor: dropHook.isOver ? 'lightgreen' : 'white', border: '1px dashed lightgray' };
 
     // Droppable setup for groups
     const groupDropHook = useDroppable({ id: `groups-${id}` });
@@ -39,7 +38,8 @@ export const SortableGroupWrapper = (props: SortableGroupWrapperProps) => {
             </div>
 
             {/* Droppable Area for Filters */}
-            <div ref={dropHook.setNodeRef}
+            {/* TEMPORARY REMOVE FILTERS */}
+            {/* <div ref={dropHook.setNodeRef}
                 className='p-2 rounded border bg-blue-100 mb-2'
                 style={group.filters.length === 0 ? filterDropstyle : {}}>
                 <SortableContext items={group.filters.length > 0 ? group.filters.map(f => f.id) : []} strategy={verticalListSortingStrategy}>
@@ -49,7 +49,7 @@ export const SortableGroupWrapper = (props: SortableGroupWrapperProps) => {
                         <div className="text-center text-gray-500">Drop filter here</div>
                     )}
                 </SortableContext>
-            </div>
+            </div> */}
 
             {/* Droppable Area for Groups */}
             <div ref={groupDropHook.setNodeRef} className='p-2 rounded border bg-green-100' style={group.groups.length === 0 ? groupDropStyle : {}}>

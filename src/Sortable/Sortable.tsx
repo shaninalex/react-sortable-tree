@@ -52,52 +52,32 @@ export const Sortable = () => {
         // extract both prefixes and both uuids
         const [activePrefix, activeID] = extractPrefixAndUUID(active.id as string)
         const [overPrefix, overID] = extractPrefixAndUUID(over.id as string)
-        // console.log(activePrefix, activeID, overPrefix, overID)
-
+        
         // TODO: get active parent group, and over parent group
         // It will help us understand exectly what and where we moving
-
+        
         // There are collition logic:
         // #1
         // if group && group -- moving groups between each other.
         // Same condition happend when moving one group from another paretn around another grourp from another parent
         if (activePrefix === 'group' && overPrefix === 'group') {
+            console.log(activePrefix, activeID, '  -  ', overPrefix, overID)
             const activeParentGroup = findParentGroupById(tree[0], activeID);
             const overParentGroup = findParentGroupById(tree[0], overID);
             if (activeParentGroup && overParentGroup) {
-                // swap up with prev group
-                if (overParentGroup.id === activeParentGroup.id && delta.y < 0) { // move up
+                if (overParentGroup.id === activeParentGroup.id && delta.y < 0) // swap up with prev group
                     setTree((prevTree) => swapGroupsInParent([...prevTree], overParentGroup.id, activeID, overID));
-                }
-                // swap down with next group
-                if (overParentGroup.id === activeParentGroup.id && delta.y > 0) { // move down
+                if (overParentGroup.id === activeParentGroup.id && delta.y > 0) // swap down with next group
                     setTree((prevTree) => swapGroupsInParent([...prevTree], overParentGroup.id, overID, activeID));
-                }
-                // move up from current group
-                if (overParentGroup.id !== activeParentGroup.id) {
-                    setTree((prevTree) => {
-                        const newTree = [...prevTree];
-                        const activeParent = findGroupById(newTree[0], activeParentGroup.id);
-                        let activeGroup = null;
-                        if (activeParent) {
-                            activeGroup = activeParent.groups.find(g => g.id === activeID);
-                            activeParent.groups = activeParent.groups.filter(g => g.id !== activeID);
-                        }
-                        const overParent = findGroupById(newTree[0], overParentGroup.id);
-                        if (overParent && activeGroup) {
-                            overParent.groups.push(activeGroup);
-                        }
-                        return newTree;
-                    });
-                }
             }
         }
 
-        // TODO: delete this condition
         // #2
         // if group && groups -- inserting group into new container
         if (activePrefix === 'group' && overPrefix === 'groups') {
-            // console.log(activePrefix, activeID, '  -  ', overPrefix, overID)
+            const activeParentGroup = findParentGroupById(tree[0], activeID);
+            const overParentGroup = findParentGroupById(tree[0], overID);
+            console.log(activePrefix, activeID, '  -  ', overPrefix, overID)
         }
 
         // #3
